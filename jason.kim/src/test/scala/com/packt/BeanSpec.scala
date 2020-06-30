@@ -19,4 +19,12 @@ class BeanSpec extends AnyFlatSpec {
     }
   }
 
+  "Hexadecimal" should "throw error when inialised with a non numeric string" in {
+    intercept[IllegalArgumentException] {
+      Hexadecimal("XYZ")
+    }
+  }
+
+
+
 }
