@@ -3,9 +3,9 @@ package com.packt
 import java.io.File
 
 import org.scalatest.{FlatSpec, Matchers}
-import CustomMatchers._
+import org.scalatest.matchers.{BeMatcher, MatchResult}
 
-class Chapter3 extends FlatSpec with Matchers {
+class Chapter3 extends FlatSpec with Matchers with CustomMatchers {
   val message = "Hello World"
   message should be ("Hello World")
   message shouldBe "Hello World"
@@ -65,17 +65,28 @@ class Chapter3 extends FlatSpec with Matchers {
   new { def isEmpty = true } shouldBe empty
   Array(1, 2, 3) should not be empty
 
-  // 잘 안됨
-//  message shouldBe lowercase
+  // BeMatcher 로 나만의 매처 만들기
+  class LowerCaseMatcher extends BeMatcher[String] {
+    def apply(left: String) =
+      MatchResult(
+        left == left.toLowerCase,
+        left + " is not lowercase",
+        left + " is lowercase"
+      )
+  }
+  val lowercase = new LowerCaseMatcher
+  message should not be lowercase
+  message.toLowerCase shouldBe lowercase
 
   names should contain("Bob")
 
-//  (List("Hi", "Di", "Ho") should contain ("ho")) (after being lowerCased)
+  import org.scalactic.StringNormalizations._
+  (List("Hi", "Di", "Ho") should contain ("ho")) (after being lowerCased)
 
   List(1, 2, 3, 4, 5) should contain oneOf (5, 7, 9)
   List(1, 2, 3, 4, 5) should contain noneOf (7, 8, 9)
   Some(0) should contain noneOf (7, 8, 9)
-//  (Array("Doe", "Ray", "Me") should contain oneOf ("X", "RAY", "BEAM")) (after being lowerCased)
+  (Array("Doe", "Ray", "Me") should contain oneOf ("X", "RAY", "BEAM")) (after being lowerCased)
 
   List(1, 2, 2, 3, 3, 3) should contain inOrderOnly (1, 2, 3)
   List(0, 1, 2, 2, 99, 3, 3, 3, 5) should contain inOrder (1, 2, 3)
@@ -83,8 +94,9 @@ class Chapter3 extends FlatSpec with Matchers {
 
   List(1, 2, 3) shouldBe sorted
 
+  import org.scalatest.Inspectors._
   val xs = List(1, 2, 3)
-//  forAll (xs) { x => x should be < 10 }
+  forAll (xs) { x => x should be < 10 }
 
   all (xs) should be < 10
   all (xs) should be > 0
@@ -153,24 +165,9 @@ trait CustomMatchers {
       )
     }
   }
-//
-//  class LowerCaseMatcher(targetString: String) extends Matcher[String] {
-//    def apply(left: String): MatchResult = {
-//      MatchResult(
-//        targetString.toLowerCase == targetString,
-//        "is not lowercase",
-//        "lowercase"
-//      )
-//    }
-//  }
 
   def endWithExtension(expectedExtension: String) = new FileEndsWithExtensionMatcher(expectedExtension)
-//  def lowercase(string: String) = new LowerCaseMatcher(string)
 }
-
-// Make them easy to import with:
-// import CustomMatchers._
-object CustomMatchers extends CustomMatchers
 
 import org.scalatest._
 abstract class UnitSpec
