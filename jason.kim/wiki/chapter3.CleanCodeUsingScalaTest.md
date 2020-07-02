@@ -549,17 +549,142 @@ class ExampleSpec extends FlatSpec with BeforeAndAfter {
 각 테스트 코드간 통신은 인스턴스 변수를 재할당하거나 인스턴스에 val 로 mutable 객체를 생성하는 것처럼 사이드 이펙트를 이용하는 것 이다. 이렇게 하면 테스트를 병렬로 실행할 수 없다. 이러한 특성때문에 ScalaTest 의 ParallelTestExecution 트레잇은 테스트 클래스당 하나의 인스턴스를 할당한다.
 BeforeAndAfter는 테스트의 실행 순서를 보장하지 않는다. 이를 주의해야한다.
 
- 
+
+### Composing fixtures by stacking traits
+대규모 프로젝트에서 팀은 종종 테스트 클래스가 다른 조합으로 필요하고 다른 순서로 초기화 및 정리가 있는 픽스쳐가 필요하다. ScalaTest에서이를 수행하는 좋은 방법은 개별 픽스쳐을 스택 가능한 특성 패턴을 사용하여 구성 할 수 있는 트레잇으로 분해하는 것이다. 예를 들어, 여러 가지 트레잇에 withFixture 메소드를 배치하면 각각 super.withFixture를 호출하여 수행 할 수 있다. 이전 예제에서 사용 된 StringBuilder 및 ListBuffer [String] 픽스처가 Builder 및 Buffer라는 두 개의 스택 가능한 픽스처 트레잇으로 분해 된 예는 다음과 같다.
+```
+package com.packt.examples.composingwithfixture
+import org.scalatest._
+import collection.mutable.ListBuffer
+
+trait Builder extends SuiteMixin {
+    this: Suite =>
+    val builder = new StringBuilder
+
+    abstract override def withFixture(test: NoArgTest) = {
+        builder.append("ScalaTest is ")
+        try {
+            super.withFixture(test)
+            // To be stackable, must call super.withFixture
+        } finally {
+            builder.clear()
+        } 
+    }
+}
+
+trait Buffer extends SuiteMixin {
+    this: Suite =>
+    val buffer = new ListBuffer[String]
+
+    abstract override def withFixture(test: NoArgTest) = {
+        try {
+            super.withFixture(test)
+            // To be stackable, must call super.withFixture
+        } finally {
+            buffer.clear()
+        }
+    } asdfadsfasd
+}
+
+class ExampleSpec extends FlatSpec with Builder with Buffer {
+    "Testing" should "be easy" in {
+        builder.append("easy!")
+        assert(builder.toString === "ScalaTest is easy!")
+        assert(buffer.isEmpty)
+
+        buffer += "sweet"
+    }
+
+    it should "be fun" in {
+        builder.append("fun!")
+        assert(builder.toString === "ScalaTest is fun!")
+        assert(buffer.isEmpty)
+        buffer += "clear"
+    }
+}
+```
+
+트레잇은 순서에 따라 조합된다. 위의 경우에 Builder는 Buffer의 super가 된다.
+
+다른 방법으로 BeforeAndAfterEach 또는 BeforeAndAfterAll 트레잇을 이용하는 방법이 있다.
+
+```
+package com.packt.examples.composingbeforeandaftereach
+
+import org.scalatest._
+import collection.mutable.ListBuffer
+
+trait Builder extends BeforeAndAfterEach {
+    this: Suite =>
+    val builder = new StringBuilder
+
+    override def beforeEach() {
+        builder.append("ScalaTest is ")
+        super.beforeEach()
+        // To be stackable, must call super.beforeEach
+    }
+
+    override def afterEach() {
+        try {
+            super.afterEach()
+            // To be stackable, must call super.afterEach
+        } finally {
+            builder.clear() 
+        }
+    }
+}
+
+trait Buffer extends BeforeAndAfterEach {
+    this: Suite =>
+    val buffer = new ListBuffer[String]
+
+    override def afterEach() {
+        try {
+            super.afterEach()
+            // To be stackable, must call super.afterEach
+        } finally {
+            buffer.clear()
+        }
+    }
+}
+
+class ExampleSpec extends FlatSpec with Builder with Buffer {
+    "Testing" should "be easy" in {
+        builder.append("easy!")
+        assert(builder.toString === "ScalaTest is easy!")
+        assert(buffer.isEmpty)
+        buffer += "sweet"
+    }
+
+    it should "be fun" in {
+        builder.append("fun!")
+        assert(builder.toString === "ScalaTest is fun!")
+        assert(buffer.isEmpty)
+        buffer += "clear"
+    }
+}
+```
+
+withFixture 구현 방법의 경우 setup, cleanup 과정에서 익셉션이 발생하면 실패로 간주한다. 하지만 BeforeAndAfterEach 는 SuiteAborted exception 이 발생한다.
 
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br>
+## Problem statement
+이전 장의 기본 변환에 대한 예제를 10 진수에서 16 진수로 또는 그 반대로 변환 할 수 있도록 확장한다.
 
+Feature – decimal to hexadecimal conversion
+As a user, I want to convert a decimal number to a hexadecimal number.
 
-asdf
+Scenario 1:
+    Given a decimal number A
+    When I convert this number to a hexadecimal number
+    Then, I get a hexadecimal equivalent B of the original decimal number
+
+Scenario 2:
+    Given a hexadecimal number X
+    When I convert this number to a decimal number
+    Then, I get decimal equivalent Y of the original hexadecimal number
+
+Scenario 3:
+    Given a decimal number A
+    When I convert A to hexadecimal to get hexadecimal number B And I again convert B to decimal number C
+    Then, A is equal to C

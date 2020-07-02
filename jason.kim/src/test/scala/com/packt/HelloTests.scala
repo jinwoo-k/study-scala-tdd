@@ -15,10 +15,10 @@ class HelloTests extends AnyFunSuite with Matchers {
     val war = true
     val over = true
 
-    war should be over
+//    war should be over
 
     val earth = false
-    earth should be a planet
+//    earth should be a planet
 
     val voltage = 12.2
     voltage should be (12.0 +- 0.5)
