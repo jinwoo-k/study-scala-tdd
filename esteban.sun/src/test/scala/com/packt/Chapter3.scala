@@ -5,7 +5,7 @@ import java.io.File
 import org.scalatest.{FlatSpec, Matchers}
 import CustomMatchers._
 
-class TestMatchers extends FlatSpec with Matchers {
+class Chapter3 extends FlatSpec with Matchers {
   val message = "Hello World"
   message should be ("Hello World")
   message shouldBe "Hello World"
