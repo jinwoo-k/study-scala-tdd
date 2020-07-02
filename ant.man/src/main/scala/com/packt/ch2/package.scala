@@ -1,6 +1,6 @@
-package com
+package com.packt
 
-package object packt {
+package object ch2 {
 
   trait Number {
     def number:String
@@ -12,3 +12,4 @@ package object packt {
   case class Binary(number:String) extends Number
 
 }
+
