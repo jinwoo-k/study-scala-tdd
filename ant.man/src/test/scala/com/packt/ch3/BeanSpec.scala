@@ -1,8 +1,6 @@
-package com.packt
+package com.packt.ch3
 
-import org.scalatest.FlatSpec
-
-class BeanSpec extends FlatSpec {
+class BeanSpec extends UnitSpec {
   "Decimal" should "throw error when initalised with a non numeric string" in {
     try {
       Decimal("XYZ")
@@ -15,6 +13,12 @@ class BeanSpec extends FlatSpec {
   "Binary" should "throw error when initalised with a non numeric string" in {
     intercept[IllegalArgumentException] {
       Binary("XYZ")
+    }
+  }
+
+  "Hexadecimal" should "throw error when initalised with a non numeric string" in {
+    intercept[IllegalArgumentException] {
+      Hexadecimal("XYZ")
     }
   }
 }

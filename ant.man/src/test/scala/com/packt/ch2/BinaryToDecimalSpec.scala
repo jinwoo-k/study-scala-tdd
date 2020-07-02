@@ -1,4 +1,4 @@
-package com.packt
+package com.packt.ch2
 
 import org.scalatest.FlatSpec
 
