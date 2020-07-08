@@ -8,12 +8,10 @@ class BinaryToDecimalSpec extends FlatSpec {
     assert(decimal.number == "2365")
   }
 
-
   it should "convert binary number 11110001111110111 to decimal equivalent 123895" in {
     var decimal:Decimal = BaseConversion.bianryToDecimal(Binary("11110001111110111"))
     assert(decimal.number == "123895")
   }
-
 
   it should "convert binary number 100000000000001110000001 to decimal equivalent 8389505" in {
     var decimal:Decimal = BaseConversion.bianryToDecimal(Binary("100000000000001110000001"))
