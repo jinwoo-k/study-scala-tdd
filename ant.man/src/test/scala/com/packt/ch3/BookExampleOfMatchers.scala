@@ -25,7 +25,7 @@ class BookExampleOfMatchers extends FlatSpec with Matchers{
   person should not be an [Animal]
 
   val names = "asdf".toSeq
-//  names should be a [Seq[_]]
+  names shouldBe a [Seq[_]]
 //  names should be a [Seq[Char]]
 //  }
 
@@ -41,6 +41,7 @@ class BookExampleOfMatchers extends FlatSpec with Matchers{
 
   "abbccxxx" should startWith regex ("a(b*)(c*)" withGroups ("bb", "cc"))
   "xxxabbccxxx" should include regex ("a(b*)(c*)" withGroups ("bb", "cc"))
+//  "123zyx321" should startWith regex ("(\\d+)" withGroups("12")) // 이것도 오류남 12 가 아니라 123 이 그룹
   "123zyx321" should startWith regex ("(\\d+)" withGroups("123"))
 //  "123zyx321" should endWith regex ("(\\d+)" withGroups("321")) // 이건 오류남
   "123zyx321" should endWith regex ("3(\\d+)" withGroups("21")) // 이건 오류 안남
@@ -83,7 +84,9 @@ class BookExampleOfMatchers extends FlatSpec with Matchers{
   List(1, 2, 3, 4, 5) should contain oneOf (5, 7, 9)
   List(1, 2, 3, 4, 5) should contain noneOf (7, 8, 9)
   Some(0) should contain noneOf (7, 8, 9)
-//  (Array("Doe", "Ray", "Me") should contain oneOf ("X", "RAY", "BEAM")) (after being lowerCased)
+  import org.scalactic.StringNormalizations._
+  (Array("Doe", "Ray", "Me") should contain oneOf ("X", "RAY", "BEAM")) (after being lowerCased)
+  (List("Hi", "Di", "Ho") should contain ("ho")) (after being lowerCased)
 
   List(1, 2, 2, 3, 3, 3) should contain inOrderOnly (1, 2, 3)
   List(0, 1, 2, 2, 99, 3, 3, 3, 5) should contain inOrder (1, 2, 3)
@@ -92,8 +95,8 @@ class BookExampleOfMatchers extends FlatSpec with Matchers{
   List(1, 2, 3) shouldBe sorted
 
   val xs = List(1, 2, 3)
-//  forAll (xs) { x => x should be < 10 }
-
+  import Inspectors._
+  forAll (xs) { x => x should be < 10 }
   all (xs) should be < 10
 
   all (xs) should be > 0
