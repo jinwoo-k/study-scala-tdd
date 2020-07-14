@@ -15,18 +15,18 @@ object BaseConversion {
     }
   }
 
-  def hexadecimalToDecimal(hexadecimal: Hexadecimal): Decimal = {
+  def hexadecimalToDecimal(hexadecimal: Number): Decimal = {
     val seq = hexadecimal.number.reverse.zipWithIndex.map { case (a, i) =>
       hexTable.indexOf(a)  * math.pow(16, i)
     }
     Decimal(seq.sum.toInt.toString)
   }
 
-  def decimalToHexadecimal(decimal: Decimal): Hexadecimal = {
+  def decimalToHexadecimal(decimal: Number): Hexadecimal = {
     Hexadecimal(toHexadecimal(BigInt(decimal.number), ""))
   }
 
-  def decimalToBinary(decimal: Decimal): Binary = {
+  def decimalToBinary(decimal: Number): Binary = {
     Binary(toBinary(BigInt(decimal.number), "").toString)
   }
 
@@ -39,7 +39,7 @@ object BaseConversion {
     }
   }
 
-  def binaryToDecimal(binary: Binary): Decimal = {
+  def binaryToDecimal(binary: Number): Decimal = {
     val seq = binary.number.reverse.zipWithIndex.map { case (a, i) =>
       a.toString.toInt * math.pow(2, i)
     }
