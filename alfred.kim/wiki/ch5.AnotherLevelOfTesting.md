@@ -271,7 +271,7 @@ BDD 프로세스가 더 협업적임을 알 수 있다. 모든 사람이 요구 
 
   | 10000 | 40000 | 50000 |
 
-
+* 참고 : https://cucumber.io/docs/gherkin/reference/
 
 ### Executable specification
 
@@ -318,4 +318,9 @@ BDD를 어떻게 사용해야하는지에 대한 두 가지 다른 유파가 있
 우리는 BDD에 대해 충분히 이야기했습니다. 직접 운전대에 손대는 것 이외에 다른 대안은 없습니다. Cucumber를 사용하는 예제 애플리케이션에서 BDD 시나리오 설정을 살펴 보겠습니다. SBT 빌드 디스크립터에 포함해야 할 Cucumber 라이브러리 종속성을 소개해야합니다. Cucumber와 함께 JUnit에 대한 종속성도 필요합니다. JUnit을 사용하여 Cucumber를 SBT와 통합하는 것이 항상 더 쉬웠 기 때문입니다. Cucumber 및 SBT 통합을 허용하는 타사 SBT 플러그인도 있지만 LightBend (이전의 TypeSafe)에 의해 유지 관리되지 않으므로 최신 Scala 및 SBT 버전으로 최신 상태가 아닙니다.
 
 
+
+* 참고 링크 
+  * cucumber-scala 
+    * https://cucumber.io/docs/installation/scala/
+    * https://github.com/cucumber/cucumber-jvm-scala
 
