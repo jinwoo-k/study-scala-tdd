@@ -322,5 +322,23 @@ BDD를 어떻게 사용해야하는지에 대한 두 가지 다른 유파가 있
 * 참고 링크 
   * cucumber-scala 
     * https://cucumber.io/docs/installation/scala/
+    
     * https://github.com/cucumber/cucumber-jvm-scala
-
+    
+      
+* intelliJ IDEA 에서 cucumber-java 실행
+  
+  * glue 설정 : step 구현체가 있는 패키지명 설정 필요
+  
+    ![cucumber-java](./images/cucumber-java.png)
+  
+* cucumber-scala version up 
+  * AS-IS
+    * build.sbt : libraryDependencies +="info.cukes" %% "cucumber-scala" % "1.2.4" % Test
+    * package name : import cucumber.api.scala.{EN, ScalaDsl} 등
+    * Run test main class : cucumber.api.cli.Main 
+  * TO-BE
+    * build.sbt : libraryDependencies += "io.cucumber" %% "cucumber-scala" % "6.1.1" % Test
+    * package name : import io.cucumber.scala.{EN, ScalaDsl}
+    * Run test main class :io.cucumber.core.cli.Main
+  
