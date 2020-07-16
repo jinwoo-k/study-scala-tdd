@@ -1,18 +1,16 @@
 # CH5. Another Level Of Testing
 
 * 유니트 테스트는 단지 TDD의 일부이다.
-
 * 어느 시점에서 클래스는 어플리케이션 내의 다른 클래스들 또는 어플리케이션 외부의 다른 시스템과 상호작용을 할 필요가 있다.
-
 * 이 장에서 우리는 어플리케이션의 통합과 기능 측면에서의 테스트를 돕는 다른 테스트 프로세스를 볼 것이다.
-
 * 우리는 다음과 같은 주제들을 다룰 것이다.
 
   * Intergration testing 통합테스팅
-
-  * Behavior-driven development (BDD)
-
-    
+* Behavior-driven development (BDD)
+* 참고
+* **유닛 테스트:** 함수 하나하나와 같이 코드의 작은 부분을 테스트하는 것
+  * **통합 테스트:** 서로 다른 시스템들의 상호작용이 잘 이루어 지는지 테스트하는 것
+  * **기능 테스트:** 사용자와 어플리케이션의 상호작용이 원활하게 이루어지는지 테스트하는 것
 
 ## Intergration testing
 
@@ -319,13 +317,49 @@ BDD를 어떻게 사용해야하는지에 대한 두 가지 다른 유파가 있
 
 
 
+### Adding Cucumber dependency 
+
+With the new library dependencies added, our build.scala file should look like this: 
+
+```
+name := "BaseConversionAPI" 
+
+version := "1.0" scalaVersion := "2.11.8" 
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.6" % "test" 
+
+libraryDependencies +="info.cukes" %% "cucumber-scala" % "1.2.4" % "test" 
+
+libraryDependencies +="info.cukes" % "cucumber-junit" % "1.2.4" % "test" 
+
+libraryDependencies +="junit" % "junit" % "4.11" % "test"
+```
+
+### Directory structure 
+
+### The feature file
+
+### Running the feature
+
+### Step definition
+
+
+
+## Summary
+
+이 장에서는 테스트에 대한 더 많은 접근 방식에 대해 설명했습니다. 우리는 의도적으로 BDD를 더 깊이 파고 들었습니다. BDD는 점점 업계에서 인정되는 표준이되고 있습니다. 이는 고객과 비즈니스에 대한 참여가 매우 높거나 개발 과정에서 그 표현이 전제되어 있기 때문입니다. 이 경우에는 구식이거나 불필요한 것을 개발할 가능성이 낮습니다.
+
+
+
+### < 실습 >
+
 * 참고 링크 
   * cucumber-scala 
     * https://cucumber.io/docs/installation/scala/
     
     * https://github.com/cucumber/cucumber-jvm-scala
     
-      
+  
 * intelliJ IDEA 에서 cucumber-java 실행
   
   * glue 설정 : step 구현체가 있는 패키지명 설정 필요
@@ -341,4 +375,7 @@ BDD를 어떻게 사용해야하는지에 대한 두 가지 다른 유파가 있
     * build.sbt : libraryDependencies += "io.cucumber" %% "cucumber-scala" % "6.1.1" % Test
     * package name : import io.cucumber.scala.{EN, ScalaDsl}
     * Run test main class :io.cucumber.core.cli.Main
+  
+  
+  
   
