@@ -12,7 +12,7 @@ class BaseConversionSteps extends BaseSteps {
     baseTo = if(x=="binary") BaseConversion.decimalToBinary(baseFrom) else
       BaseConversion.bianryToDecimal(baseFrom)
   }
-  Then("""^I get back a (binary|decimal) number (\d+)$"""){ (x:String, expected: String) =>
+  Then("""^I get back a (binary|decimal) number (\d+)$"""){ (_:String, expected: String) =>
     baseTo.number shouldBe expected
   }
 }
