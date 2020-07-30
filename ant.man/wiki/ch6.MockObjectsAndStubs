@@ -5,12 +5,13 @@
   - tight coupling and loose coupling (한 모듈이 바뀌는것에 따라 다른 모듈이 바뀌는지가 척도)
   - 커플 링은 코드의 테스트 가능성에서 중요한 역할을 함. 코드가 느슨하게 결합될수록 더 테스트 가능
   - 모듈을 독립적으로 테스트하는 것이 더 쉬움
+
 ## Stubs
 - stub: 미리 입력된 데이터로 미리 정의된 결과를 생성하는 객체
   - 사용법이 매우 제한적
 
 ## Mocks
-- mock: stub과 같이 미리 설정된 값을 반환
+- mock: stub과 같이 미리 설정된 값을 반환, mock 호출횟수와 호출순서에 대한 기대치도 프로그래밍 가능
   - 모의 객체를 사용하면 실제 클래스를 사용하지 않고 클래스 간의 상호 작용에 대한 특정 세부 사항을 테스트하는 테스트가 수행
 
 -  Mock Object는 행위 검증(behavior verification)에 사용하고, Stub은 상태 검증(state verification)에 사용하는 것
@@ -19,6 +20,7 @@
 
 - Expectations
   - 기대치를 설정해 동작을 정의, 테스트가 예상한대로 동작하는지 확인 (횟수에 대한 충족 테스트는 못함)
+    - 응답, 에러, 순서만 검증
 - verification
   - 기대치를 충족하는지 설정
 
@@ -41,7 +43,20 @@
     - ScalaTest 또는 Specs2에 쉽게 연결
     - 확장 가능
   - http://www.jmock.org/
-
+```scala
+val cycle = new JMockCycle
+import cycle._
+val mockCollaborator = mock[Collaborator]
+expecting { e => import e._
+  oneOf (mockCollaborator).addToTotal(200)
+exactly(3).of (mockCollaborator).addedToTotal(200)
+}
+whenExecuting {
+  classUnderTest.addToTotal(200)
+  classUnderTest.addToTotal(200)
+  classUnderTest.addToTotal(200)
+}
+```
 - EasyMock
   - 이름에서 알듯 mock 을 쉽게 만듦
   - http://easymock.org/
@@ -87,9 +102,10 @@ verify(mockCollaborator, times(3)).changePayroll("Person1")
     - 오픈 소스
     - 다음과 같은 스칼라 관련 기능 지원 : Operator methods, 메소드 오버로딩, 패턴 매칭, Parameterized method
     - ScalaTest 및 Specs2와 호환
-  - mockFunction
-  - Proxy mocks
+  - mockFunction: 함수 mock
+  - Proxy mocks: interface 나 trait 을 mock
   - Generated mocks
+    - mock.annotation(클래스 생성), mockWithCompanion (동반객체), mockObject(싱글톤)
   - https://scalamock.org/quick-start/
   - 추가 장점
   ```scala
@@ -103,10 +119,8 @@ calc expects (0, 2) throws new AirthmeticException("Divide by zero")
   ```
 
 
-
-
 ## summary
-- 개발자와 mock 객체는 애증의 관
+- 개발자와 mock 객체는 애증의 관계
 - class를 독립적으로 테스트 할 수 있다는 이점 -> 느슨하게 결합 된 아키텍처로 발전하며 코드 재사용성 높임
 - mock는 테스트 코드를 테스트중인 클래스의 실제 구현에 연결
 - 테스트 코드에 주요 리팩토링이 수행되면 테스트에서 모의 예상 및 검증이 변경 될 수 있음. 이것은 테스트 및 응용 프로그램 코드의 분리 원칙에서 벗어남.

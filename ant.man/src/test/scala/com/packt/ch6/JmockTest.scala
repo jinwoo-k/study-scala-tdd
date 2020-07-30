@@ -15,13 +15,13 @@ class JmockTest extends TestCase {
 
   def testOneSubscriberReceivesAMessage(): Unit = { // set up
     val subscriber = context.mock(classOf[mutable.Subscriber[_, _]])
-    val publisher = new Publisher
-    publisher.add(subscriber)
+//    val publisher = new Publisher
+//    publisher.add(subscriber)
     val message = "message"
     // expectations
     context.checking(new Expectations() {})
     // execute
-    publisher.publish(message)
+//    publisher.publish(message)
     // verify
     context.assertIsSatisfied
   }
