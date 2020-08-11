@@ -1,0 +1,36 @@
+# 8장 Specs2 와 함께 스칼라 테스트
+- specs2 는 실행 가능한 사양 작상이 편한 유명한 라이브러리임
+
+## Differences between Specs2 and ScalaTest
+- 전체 테스트 구조 다름, syntax 와 matcher 다름
+- specs2 는 BDD 에 전념, scalatest 는 더 일반적
+- specs2는 더 많은 matcher 가짐 (예를들어 그 파일은 디렉토리)
+- scalatest의 기본 5개 연산자 (===, > , <, >=, <=) 보다 많은 operator (->-, >> , | , |>, ! , ^^^)
+- specs2는 data tables 를 가짐
+- specs2는 별도의 스레드에서 동시 실행가능
+
+## style
+- scala code를 한곳에 모으고 다른곳에 text 를 작성
+  - scala 코드와 텍스트 상호배치 가능
+
+## matcher
+- string
+- numeric value
+- object ,class, reference
+- option value
+- try monad
+- exception
+- data structure (map, Iterables, sequence, traversable)
+- xml
+- file
+- partial function
+- data tables
+
+## 참고
+- https://hamait.tistory.com/629
+  - mockito 가 기본 들어가있음
+- https://www.scalatest.org/at_a_glance/Spec
+  - 여러 matcher 별 예제코드 (책 예제도 포함)
+- https://code.google.com/archive/p/specs/wikis/MatchersGuide.wiki
+  - 여러 matcher 코드
+- https://etorreborre.github.io/specs2/guide/SPECS2-2.4.17/org.specs2.guide.Matchers.html#Matchers

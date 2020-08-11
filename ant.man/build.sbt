@@ -19,3 +19,7 @@ libraryDependencies += "org.hamcrest" % "hamcrest-library" % "1.3" % Test
   // ScalaTest 2.2.6 is incompatible with ScalaCheck 1.13.0. Downgrading to "scalacheck" % "1.12.5" helps.
 //libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.1" % Test
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.12.5" % Test
+
+// specs2 추가 (8장)
+libraryDependencies += "org.specs2" %% "specs2-core" % "3.8.4" % "test"
+scalacOptions in Test ++= Seq("-Yrangepos")

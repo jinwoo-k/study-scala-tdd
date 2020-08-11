@@ -181,12 +181,9 @@ class DecimalToBinaryGenSpec extends UnitSpec with
 - table-driven and Generator-driven property checks 둘다 적재적소에 써야함
   - Generator-driven checks 는 문서화 하기 힘듦
 
+## 추가 참조하기 좋은 자료
 
-
-
-
-
-
-
-
-d
+- https://github.com/typelevel/scalacheck/blob/master/doc/UserGuide.md
+- http://charleso.github.io/property-testing-preso/yowlj2015.html
+- https://tyrcho.github.io/pbt-kata/#1
+- https://www.scalacheck.org/files/scaladays2014/index.html#1
