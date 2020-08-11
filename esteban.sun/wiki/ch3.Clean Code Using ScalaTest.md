@@ -24,7 +24,7 @@ FunSuite 형식으로 설명
         val two = 2
         assertResult(two) { 1 + 1 }
     }
-    ``` 
+    ```
   
 * intercept (Exception 발생 여부를 체크하여 주어진 Exception 발생시 통과)
     ```
@@ -265,8 +265,8 @@ trait CustomMatchers {
     def apply(left: java.io.File): MatchResult = { val name = left.getName
       MatchResult(
         name.endsWith(expectedExtension),
-        s"""File $name did not end with extension "$expectedExtension"""",
-        s"""File $name ended with extension "$expectedExtension""""
+        s"""File $name did not end with extension "$expectedExtension" """,
+        s"""File $name ended with extension "$expectedExtension" """
       )
     }
   }
@@ -315,7 +315,7 @@ abstract class UnitSpec extends FlatSpec
 class DecimalBinarySpec extends UnitSpec {...}
 class BeanSpec extends UnitSpec (---)
 class BinaryToDecimalSpec extends UnitSpec {...}
-``` 
+```
 대부분의 프로젝트들은 다양한 베이스 테스트클래스들을 갖기도 한다. (DbSpec, ActorSysSpec, DbActorSysSpec 등)
 
 ## * Test fixtures
@@ -384,7 +384,7 @@ class ExampleSpec extends FlatSpec {
     assert (buffer.isEmpty)
   }
 }
-``` 
+```
 
 ### Instantiating fixture-context objects
 * 테스트 마다 다른 fixture 가 필요한 경우 또는 조합이 필요한 경우 유용한 방법
