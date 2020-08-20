@@ -3,7 +3,7 @@ package com.packt.ch8
 import org.specs2.Specification
 
 class ExampleAcceptanceSpec extends Specification { def is =
-  args(sequential = true) ^
+//  args(sequential = true) ^
   "Our example specification" ^
     "and we should run t1 here" ! t1 ^
     "and we should run t2 here" ! t2
